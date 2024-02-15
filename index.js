@@ -4,8 +4,8 @@ class EternalReturn {
 
   #_baseURL = "https://bser-rest-release.bser.io/api";
   #_endpoint = "external/findReplayGame"
-  #_gameVersion = 1.14;
-  #_replayVersion = 1.14;
+  #_gameVersion = "1.15.0";
+  #_replayVersion = "1.15.0";
 
   constructor(token) {
     this._token = token.replace("Session:", "");
@@ -49,7 +49,8 @@ class Exceptions extends Error {
     0: "Missing gameId",
     1001: "Parameter type mismatch",
     1102: "Invalid Token",
-    1201: "Not exist this gameId"
+    1201: "Not exist this gameId",
+    9300: "Invalid ID Replay version"
   }
 
   constructor(cod) {
@@ -58,7 +59,6 @@ class Exceptions extends Error {
     this.message = Exceptions.errors[cod]
   }
 }
-
 
 (async () => {
   const er = new EternalReturn("Session:<token>");
