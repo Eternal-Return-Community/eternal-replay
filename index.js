@@ -1,21 +1,23 @@
 const { writeFileSync } = require("node:fs");
 
+process.env['NODE_TLS_REJECT_UNAUTHORIZED'] = '0';
+
 class EternalReturn {
 
-  #_baseURL = "https://bser-rest-release.bser.io/api";
-  #_endpoint = "external/findReplayGame"
-  #_gameVersion = "1.15.0";
-  #_replayVersion = "1.15.0";
+  #_baseURL = 'https://bser-rest-release.bser.io/api';
+  #_endpoint = 'external/findReplayGame'
+  #_gameVersion = '1.15.0';
+  #_replayVersion = '1.15.0';
 
   constructor(token) {
-    this._token = token.replace("Session:", "");
+    this._token = token.replace('Session:', '');
     this._headers = {
-      method: "GET",
+      method: 'GET',
       headers: {
-        "X-BSER-SessionKey": `Session:${this._token}`,
-        "X-BSER-Version": this.#_gameVersion,
-        "X-BSER-Replay-Version": this.#_replayVersion,
-        "Content-Type": "application/json"
+        'X-BSER-SessionKey': `Session:${this._token}`,
+        'X-BSER-Version': this.#_gameVersion,
+        'X-BSER-Replay-Version': this.#_replayVersion,
+        'Content-Type': 'application/json'
       }
     }
   }
@@ -45,22 +47,23 @@ class EternalReturn {
 
 class Exceptions extends Error {
 
-  static errors = {
-    0: "Missing gameId",
-    1001: "Parameter type mismatch",
-    1102: "Invalid Token",
-    1201: "Not exist this gameId",
-    9300: "Invalid ID Replay version"
+  #errors = {
+    0: 'Missing gameId',
+    1001: 'Parameter type mismatch',
+    1007: 'Invalid Version (Game)',
+    1102: 'Invalid Token',
+    1201: 'Not exist this gameId',
+    9300: 'Invalid ID Replay version'
   }
 
   constructor(cod) {
     super()
     this.name = "Eternal Return Exeception"
-    this.message = Exceptions.errors[cod]
+    this.message = this.#errors[cod]
   }
 }
 
 (async () => {
-  const er = new EternalReturn("Session:<token>");
-  await er.getReplay("<gameId>");
+  const er = new EternalReturn('<Token>');
+  await er.getReplay('<gameID>');
 })();
