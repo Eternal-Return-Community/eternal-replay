@@ -58,7 +58,7 @@ class Exceptions extends Error {
 
   constructor(cod) {
     super()
-    this.name = "Eternal Return Exeception"
+    this.name = "Eternal Return Exception"
     this.message = this.#errors[cod]
   }
 }
