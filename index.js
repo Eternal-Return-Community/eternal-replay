@@ -5,9 +5,8 @@ process.env['NODE_TLS_REJECT_UNAUTHORIZED'] = '0';
 class EternalReturn {
 
   #_baseURL = 'https://bser-rest-release.bser.io/api';
-  #_endpoint = 'external/findReplayGame'
-  #_gameVersion = '1.15.0';
-  #_replayVersion = '1.15.0';
+  #_gameVersion = '1.22.0';
+  #_replayVersion = '1.22.0';
 
   constructor(token) {
     this._token = token.replace('Session:', '');
@@ -17,16 +16,17 @@ class EternalReturn {
         'X-BSER-SessionKey': `Session:${this._token}`,
         'X-BSER-Version': this.#_gameVersion,
         'X-BSER-Replay-Version': this.#_replayVersion,
+        'X-BSER-AuthProvider': 'STEAM',
         'Content-Type': 'application/json'
       }
     }
   }
 
-  async getReplay(gameId, userId = 225296) {
+  async getReplay(gameId) {
     try {
       if (!gameId.trim()) throw new Exceptions(0);
 
-      const response = await fetch(`${this.#_baseURL}/${this.#_endpoint}/${gameId}/${userId}`, this._headers);
+      const response = await fetch(`${this.#_baseURL}/external/findReplayGame/${gameId}/0`, this._headers);
       const data = await response.json();
 
       if (data.cod !== 200) throw new Exceptions(data.cod);
